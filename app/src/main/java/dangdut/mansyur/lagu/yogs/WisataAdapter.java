@@ -22,6 +22,7 @@ public class WisataAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private Context mContext;
     private ViewHolder holder;
+    private PindahHalaman mPindahHalaman;
     String useridd;
 
     public WisataAdapter(Context context) {
@@ -48,6 +49,10 @@ public class WisataAdapter extends BaseAdapter {
 
     public void setData(ArrayList<Hewan> list) {
         mDataList = list;
+    }
+
+    public void pindahHalaman(PindahHalaman pindahalaman) {
+        mPindahHalaman= pindahalaman;
     }
 
 
@@ -101,6 +106,13 @@ public class WisataAdapter extends BaseAdapter {
                 .into(holder.tvContent);
 
 
+       holder.tvContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPindahHalaman.OnLikeClickPindahHalaman(v,position);
+            }
+        });
+
         return itemView;
     }
 
@@ -121,6 +133,9 @@ public class WisataAdapter extends BaseAdapter {
     }
     public interface ProfileUser {
         public abstract void OnClickProfile(View view, int position);
+    }
+    public interface PindahHalaman {
+        public abstract void OnLikeClickPindahHalaman(View view, int position);
     }
 
     static class ViewHolder {

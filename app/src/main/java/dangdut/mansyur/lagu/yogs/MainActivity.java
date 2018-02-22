@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = (ExpandableHeightListView) findViewById(R.id.recyclerview);
 
 
+
         loadTask2();
 
     }
@@ -141,13 +142,22 @@ public class MainActivity extends AppCompatActivity {
         queue.add(mRequest);
     }
 
-    private void updateList(HewanWrapper wrapper) {
+    private void updateList(final HewanWrapper wrapper) {
 
         int i = wrapper.list.size();
         int j = 0;
         do {
             if (j >= i) {
                 mAdapter = new WisataAdapter(MainActivity.this);
+                mAdapter.pindahHalaman(new WisataAdapter.PindahHalaman() {
+                    public void OnLikeClickPindahHalaman(View view, int position) {
+                        final Hewan articles = wrapper.list.get(position);
+                        Intent intent = new Intent(MainActivity.this,FullImageActivity.class);
+                        intent.putExtra("attachment",articles.gambar);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(intent);
+                    }
+                });
 
                 mAdapter.setData(mWisataList);
                 mAdapter.notifyDataSetChanged();

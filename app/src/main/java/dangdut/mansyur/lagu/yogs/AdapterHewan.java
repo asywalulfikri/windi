@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class AdapterHewan extends RecyclerView.Adapter<AdapterHewan.ViewHolder> {
     private ArrayList<Hewan> android;
     private Context context;
+    private PindahHalaman  mPindahHalaman;
 
 
     public AdapterHewan(Context context,ArrayList<Hewan> android) {
@@ -25,6 +26,10 @@ public class AdapterHewan extends RecyclerView.Adapter<AdapterHewan.ViewHolder> 
 
     }
 
+    public void pindahHalaman(PindahHalaman pindahalaman) {
+        mPindahHalaman= pindahalaman;
+    }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -33,7 +38,7 @@ public class AdapterHewan extends RecyclerView.Adapter<AdapterHewan.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(ViewHolder viewHolder, final int i) {
 
         Hewan hewan = android.get(i);
 
@@ -41,6 +46,12 @@ public class AdapterHewan extends RecyclerView.Adapter<AdapterHewan.ViewHolder> 
                 .load(hewan.gambar)
                 .into(viewHolder.attachment);
 
+        viewHolder.attachment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPindahHalaman.OnLikeClickPindahHalaman(v,i);
+            }
+        });
     }
 
     @Override
@@ -58,7 +69,13 @@ public class AdapterHewan extends RecyclerView.Adapter<AdapterHewan.ViewHolder> 
 
             attachment = view.findViewById(R.id.iv_hewan);
 
+
+
         }
+    }
+
+    public interface PindahHalaman {
+        public abstract void OnLikeClickPindahHalaman(View view, int position);
     }
 
 }
